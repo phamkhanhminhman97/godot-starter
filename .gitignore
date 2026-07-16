@@ -1,0 +1,18 @@
+# Godot 4
+game/.godot/
+game/android/
+*.translation
+export.cfg
+
+# Build output
+dist/
+
+# macOS
+.DS_Store
+
+# Editor/IDE
+.vscode/
+.idea/
+
+# Scratch
+*.tmp

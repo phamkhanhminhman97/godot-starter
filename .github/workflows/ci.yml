@@ -1,0 +1,183 @@
+name: CI
+
+# D-008 (Milestone 0 gate): mọi push phải chứng minh sim tất định cho CÙNG
+# hash trên macOS lẫn Windows (chạy headless, không chỉ "không lỗi"), và
+# project phải export được Web + Windows artifact tự động.
+#
+# Mọi lệnh Godot trong file này đã chạy thử thật trên máy (không đoán):
+# `--headless --import` bắt buộc chạy TRƯỚC `--script` — nếu không, GDScript
+# không resolve được các class_name toàn cục (cache .godot/ bị gitignore,
+# CI luôn checkout sạch) và Godot thoát exit code 0 giả — script coi như
+# chưa hề chạy dù CI tưởng là xanh. Do đó workflow này KHÔNG chỉ dựa vào exit
+# code mà còn grep "HASH=" trong stdout làm lớp bảo hiểm thứ hai.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  GODOT_VERSION: 4.7.1
+
+jobs:
+  determinism-macos:
+    name: Determinism (macOS)
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache Godot editor
+        id: cache-godot
+        uses: actions/cache@v4
+        with:
+          path: godot-macos
+          key: godot-${{ env.GODOT_VERSION }}-macos
+
+      - name: Download Godot editor
+        if: steps.cache-godot.outputs.cache-hit != 'true'
+        run: |
+          curl -L -o godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_macos.universal.zip"
+          mkdir -p godot-macos
+          unzip -q godot.zip -d godot-macos
+
+      - name: Prime import cache
+        working-directory: game
+        run: ../godot-macos/Godot.app/Contents/MacOS/Godot --headless --import
+
+      - name: Run determinism test
+        id: test
+        working-directory: game
+        run: |
+          set -o pipefail
+          ../godot-macos/Godot.app/Contents/MacOS/Godot --headless --script res://tests/determinism_test.gd 2>&1 | tee test_output.txt
+          grep -q "^HASH=" test_output.txt || { echo "::error::Không tìm thấy dòng HASH= trong output — test coi như KHÔNG chạy, không phải chỉ 'không lỗi'"; exit 1; }
+          grep "^HASH=" test_output.txt | sed 's/HASH=//' > hash.txt
+          echo "hash=$(cat hash.txt)" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hash-macos
+          path: game/hash.txt
+
+  determinism-windows:
+    name: Determinism (Windows)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache Godot editor
+        id: cache-godot
+        uses: actions/cache@v4
+        with:
+          path: godot-windows
+          key: godot-${{ env.GODOT_VERSION }}-windows
+
+      - name: Download Godot editor
+        if: steps.cache-godot.outputs.cache-hit != 'true'
+        shell: pwsh
+        run: |
+          Invoke-WebRequest -Uri "https://github.com/godotengine/godot/releases/download/$env:GODOT_VERSION-stable/Godot_v$env:GODOT_VERSION-stable_win64.exe.zip" -OutFile godot.zip
+          New-Item -ItemType Directory -Force -Path godot-windows
+          Expand-Archive -Path godot.zip -DestinationPath godot-windows
+
+      - name: Prime import cache
+        working-directory: game
+        shell: pwsh
+        run: ..\godot-windows\Godot_v$env:GODOT_VERSION-stable_win64.exe --headless --import
+
+      - name: Run determinism test
+        working-directory: game
+        shell: pwsh
+        run: |
+          ..\godot-windows\Godot_v$env:GODOT_VERSION-stable_win64.exe --headless --script res://tests/determinism_test.gd 2>&1 | Tee-Object -FilePath test_output.txt
+          $match = Select-String -Path test_output.txt -Pattern '^HASH=(-?\d+)'
+          if (-not $match) {
+            Write-Host "::error::Không tìm thấy dòng HASH= trong output — test coi như KHÔNG chạy"
+            exit 1
+          }
+          $match.Matches[0].Groups[1].Value | Out-File -Encoding ascii -NoNewline hash.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hash-windows
+          path: game/hash.txt
+
+  compare-determinism:
+    name: So sánh hash cross-OS (D-008 gate chính)
+    needs: [determinism-macos, determinism-windows]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { name: hash-macos, path: macos }
+      - uses: actions/download-artifact@v4
+        with: { name: hash-windows, path: windows }
+      - name: Compare
+        run: |
+          MACOS_HASH=$(tr -d '[:space:]' < macos/hash.txt)
+          WINDOWS_HASH=$(tr -d '[:space:]' < windows/hash.txt)
+          echo "macOS:   $MACOS_HASH"
+          echo "Windows: $WINDOWS_HASH"
+          if [ "$MACOS_HASH" != "$WINDOWS_HASH" ]; then
+            echo "::error::Hash LỆCH giữa macOS và Windows — D-009 tripwire kích hoạt, xem DECISIONS.md"
+            exit 1
+          fi
+          echo "Hash khớp — sim tất định cross-OS xác nhận."
+
+  export-artifacts:
+    name: Export Web + Windows
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache Godot editor + export templates
+        id: cache-godot
+        uses: actions/cache@v4
+        with:
+          path: |
+            godot-linux
+            export_templates
+          key: godot-${{ env.GODOT_VERSION }}-linux-export
+
+      - name: Download Godot editor + export templates
+        if: steps.cache-godot.outputs.cache-hit != 'true'
+        run: |
+          curl -L -o godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          mkdir -p godot-linux
+          unzip -q godot.zip -d godot-linux
+          chmod +x godot-linux/Godot_v${GODOT_VERSION}-stable_linux.x86_64
+
+          curl -L -o templates.tpz "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+          mkdir -p templates_extracted
+          unzip -q templates.tpz -d templates_extracted
+          mkdir -p export_templates
+          mv templates_extracted/templates export_templates/${GODOT_VERSION}.stable
+
+      - name: Install export templates
+        run: |
+          mkdir -p ~/.local/share/godot/export_templates
+          cp -r export_templates/${GODOT_VERSION}.stable ~/.local/share/godot/export_templates/
+
+      - name: Prime import cache
+        working-directory: game
+        run: ../godot-linux/Godot_v${GODOT_VERSION}-stable_linux.x86_64 --headless --import
+
+      - name: Export Web
+        working-directory: game
+        run: |
+          mkdir -p ../dist/web
+          ../godot-linux/Godot_v${GODOT_VERSION}-stable_linux.x86_64 --headless --export-release "Web" ../dist/web/index.html
+
+      - name: Export Windows
+        working-directory: game
+        run: |
+          mkdir -p ../dist/windows
+          ../godot-linux/Godot_v${GODOT_VERSION}-stable_linux.x86_64 --headless --export-release "Windows Desktop" ../dist/windows/dogfighter.exe
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: dist/web/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: dist/windows/
