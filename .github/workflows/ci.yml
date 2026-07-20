@@ -54,6 +54,10 @@ jobs:
           grep "^HASH=" test_output.txt | sed 's/HASH=//' > hash.txt
           echo "hash=$(cat hash.txt)" >> "$GITHUB_OUTPUT"
 
+      - name: Run movement tests
+        working-directory: game
+        run: ../godot-macos/Godot.app/Contents/MacOS/Godot --headless --script res://tests/movement_test.gd
+
       - uses: actions/upload-artifact@v4
         with:
           name: hash-macos
@@ -96,6 +100,11 @@ jobs:
             exit 1
           }
           $match.Matches[0].Groups[1].Value | Out-File -Encoding ascii -NoNewline hash.txt
+
+      - name: Run movement tests
+        working-directory: game
+        shell: pwsh
+        run: ..\godot-windows\Godot_v$env:GODOT_VERSION-stable_win64.exe --headless --script res://tests/movement_test.gd
 
       - uses: actions/upload-artifact@v4
         with:

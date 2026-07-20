@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0",
+  "id": "replace-me",
+  "weightPct": 100,
+  "moveSpeedUnitsPerTick": 0,
+  "groundAccelerationUnitsPerTick2": 0,
+  "airAccelerationUnitsPerTick2": 0,
+  "jumpImpulseUnitsPerTick": 0,
+  "maxFallSpeedUnitsPerTick": 0,
+  "coyoteTicks": 0,
+  "jumpBufferTicks": 0,
+  "visualManifest": "res://assets/characters/replace-me/asset-manifest.json"
+}
+

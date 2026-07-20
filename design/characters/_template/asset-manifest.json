@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1.0",
+  "status": "draft",
+  "characterId": "replace-me",
+  "runtime": {
+    "frameWidth": 256,
+    "frameHeight": 256,
+    "authoredFacing": "right",
+    "mirrorLeft": true,
+    "mirrorSafe": false,
+    "pivot": { "x": 0.5, "y": 0.9 },
+    "frameOrder": "row-major",
+    "textureFilter": "linear",
+    "weaponBakedIntoBody": false
+  },
+  "requiredStates": [
+    "idle", "walk", "jump_start", "rise", "fall", "land",
+    "attack", "hurt", "launch", "tumble", "death", "ability"
+  ],
+  "states": {
+    "idle": { "status": "missing", "sheet": null, "rows": 2, "cols": 2, "frameCount": 4, "fps": 6, "loop": true, "events": [], "qcReport": null },
+    "walk": { "status": "missing", "sheet": null, "rows": 2, "cols": 3, "frameCount": 6, "fps": 12, "loop": true, "events": [], "qcReport": null },
+    "jump_start": { "status": "missing", "sheet": null, "rows": 1, "cols": 3, "frameCount": 3, "fps": 12, "loop": false, "events": [], "qcReport": null },
+    "rise": { "status": "missing", "sheet": null, "rows": 1, "cols": 2, "frameCount": 2, "fps": 8, "loop": true, "events": [], "qcReport": null },
+    "fall": { "status": "missing", "sheet": null, "rows": 1, "cols": 2, "frameCount": 2, "fps": 8, "loop": true, "events": [], "qcReport": null },
+    "land": { "status": "missing", "sheet": null, "rows": 1, "cols": 3, "frameCount": 3, "fps": 12, "loop": false, "events": [], "qcReport": null },
+    "attack": { "status": "missing", "sheet": null, "rows": 2, "cols": 3, "frameCount": 6, "fps": 12, "loop": false, "events": [{ "frame": 3, "type": "spawn", "id": "weapon-primary" }], "qcReport": null },
+    "hurt": { "status": "missing", "sheet": null, "rows": 1, "cols": 3, "frameCount": 3, "fps": 12, "loop": false, "events": [], "qcReport": null },
+    "launch": { "status": "missing", "sheet": null, "rows": 2, "cols": 2, "frameCount": 4, "fps": 12, "loop": false, "events": [], "qcReport": null },
+    "tumble": { "status": "missing", "sheet": null, "rows": 2, "cols": 3, "frameCount": 6, "fps": 12, "loop": true, "events": [], "qcReport": null },
+    "death": { "status": "missing", "sheet": null, "rows": 2, "cols": 4, "frameCount": 8, "fps": 10, "loop": false, "events": [{ "frame": 7, "type": "despawn", "id": "self" }], "qcReport": null },
+    "ability": { "status": "missing", "sheet": null, "rows": 2, "cols": 4, "frameCount": 8, "fps": 12, "loop": false, "events": [{ "frame": 4, "type": "hit", "id": "ability" }], "qcReport": null }
+  },
+  "aliases": {},
+  "portraits": {
+    "select": null,
+    "hud": null
+  }
+}
+

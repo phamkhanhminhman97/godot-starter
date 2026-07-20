@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "1.0",
+  "identity": {
+    "id": "nori-courier",
+    "displayName": "Nori",
+    "role": "ranged pressure",
+    "fantasy": "A compact forest courier who keeps opponents honest with a short-range compressed-air pistol.",
+    "silhouette": [
+      "Teal hood framing two rounded ears",
+      "Large ringed tail and rust-orange side satchel",
+      "Short brass air-pistol held close to the body"
+    ],
+    "palette": ["#17665F", "#E8D3A0", "#B75D2B", "#B2833C", "#302F2B"]
+  },
+  "combat": {
+    "health": 100,
+    "moveSpeed": 100,
+    "primary": {
+      "name": "Breeze Pop",
+      "damage": 0,
+      "range": 360,
+      "startupFrames": 4,
+      "activeFrames": [4],
+      "recoveryFrames": 4,
+      "cooldownMs": 600,
+      "counterplay": "Advance during the visible crouched wind-up, bait the shot, then punish Nori during the open recovery pose.",
+      "knockback": {
+        "baseSimUnitsPerSecond": 4600,
+        "angleDegrees": 18
+      }
+    },
+    "ability": {
+      "name": "Tailwind Brake",
+      "description": "Nori plants her feet and releases a short rearward air burst that creates space but leaves her stationary during the wind-up.",
+      "cooldownMs": 7000,
+      "counterplay": "Jump over the low burst or wait outside its short range; Nori cannot move while priming it.",
+      "interruption": "If interrupted before the spawn frame, the cooldown is not spent and no burst is created."
+    },
+    "weaknesses": [
+      "The pistol has short range and loses to opponents who can stay just outside its effective push distance.",
+      "Both the shot recovery and ability wind-up expose Nori to a close-range punish."
+    ]
+  },
+  "animation": {
+    "sprite": {
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "directions": ["right"],
+      "pivot": { "x": 0.5, "y": 0.9 }
+    },
+    "states": {
+      "idle": {
+        "frameCount": 4,
+        "fps": 6,
+        "loop": true,
+        "onComplete": "idle"
+      },
+      "walk": {
+        "frameCount": 6,
+        "fps": 12,
+        "loop": true,
+        "onComplete": "walk"
+      },
+      "attack": {
+        "frameCount": 9,
+        "fps": 12,
+        "loop": false,
+        "events": [
+          { "frame": 4, "type": "hit", "id": "primary" },
+          { "frame": 4, "type": "sound", "id": "nori-breeze-pop" },
+          { "frame": 4, "type": "effect", "id": "nori-muzzle-puff" }
+        ],
+        "cancelAfterFrame": 7,
+        "onComplete": "idle"
+      },
+      "hurt": {
+        "frameCount": 4,
+        "fps": 12,
+        "loop": false,
+        "events": [
+          { "frame": 0, "type": "sound", "id": "nori-hurt" }
+        ],
+        "onComplete": "idle"
+      },
+      "death": {
+        "frameCount": 6,
+        "fps": 10,
+        "loop": false,
+        "events": [
+          { "frame": 5, "type": "despawn", "id": "self" }
+        ],
+        "onComplete": "removed"
+      },
+      "ability": {
+        "frameCount": 8,
+        "fps": 12,
+        "loop": false,
+        "events": [
+          { "frame": 4, "type": "spawn", "id": "tailwind-brake" },
+          { "frame": 4, "type": "effect", "id": "tailwind-burst" }
+        ],
+        "cancelAfterFrame": 6,
+        "onComplete": "idle"
+      }
+    }
+  },
+  "artBrief": {
+    "spriteSheet": "Each body action is an independent transparent sheet. Idle is a 2x2 sheet; walk is a 2x3 sheet read left-to-right then top-to-bottom; attack is a 3x3 sheet; hurt is a 2x2 sheet. Use feet pivot (0.5, 0.9). Keep the air-pistol, muzzle puff, projectile, and impact as separate renderer layers.",
+    "windUpCue": "Nori lowers her stance, brings both hands tight around the brass pistol, and visibly braces before the hit frame.",
+    "impactCue": "At attack frame 4, spawn a separate compact air-puff and play a single simulation-authoritative hit event; the body sheet contains only recoil.",
+    "recoveryCue": "Nori opens her stance and lowers the pistol for two readable frames after firing.",
+    "avoid": [
+      "Named franchise characters, assets, logos, and terminology",
+      "Detached muzzle flashes, projectiles, impacts, dust, or motion lines inside body sheets",
+      "Unreadable detail or frame-to-frame silhouette drift at mobile scale"
+    ]
+  },
+  "implementationNotes": {
+    "stateTransitions": [
+      "idle -> walk -> idle",
+      "idle|walk -> attack -> idle",
+      "idle|walk -> ability -> idle",
+      "any living state -> hurt -> idle",
+      "any living state -> death -> removed"
+    ],
+    "eventsAreAuthoritative": true,
+    "notes": "The simulation/server emits and resolves hit, spawn, knockback, death, and state transitions. The renderer only plays frames and displays event-driven VFX. Damage is zero in this ring-out prototype; primary knockback must be applied only at attack event frame 4."
+  }
+}

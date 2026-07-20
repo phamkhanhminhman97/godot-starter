@@ -1,0 +1,110 @@
+{
+  "schemaVersion": "1.0",
+  "identity": {
+    "id": "replace-me",
+    "displayName": "Replace Me",
+    "role": "ranged pressure",
+    "fantasy": "One short original visual and gameplay fantasy.",
+    "silhouette": [
+      "One recognizable large shape",
+      "One readable body or costume shape",
+      "One movement cue"
+    ],
+    "palette": ["#000000", "#000000", "#000000"]
+  },
+  "combat": {
+    "model": "knockback-ringout",
+    "health": 0,
+    "weightPct": 100,
+    "moveSpeed": 100,
+    "primary": {
+      "name": "Universal attack body action",
+      "damage": 0,
+      "range": 0,
+      "startupFrames": 3,
+      "activeFrames": [3],
+      "recoveryFrames": 3,
+      "cooldownMs": 0,
+      "dataSource": "weapon",
+      "counterplay": "State a specific spacing, interrupt, or punish option."
+    },
+    "ability": {
+      "name": "Signature ability",
+      "description": "Describe one original ability with one clear purpose.",
+      "cooldownMs": 6000,
+      "counterplay": "State a specific counterplay option.",
+      "interruption": "State what happens if interrupted before its event frame."
+    },
+    "weaknesses": [
+      "One concrete timing or spacing weakness",
+      "One second concrete weakness"
+    ]
+  },
+  "animation": {
+    "sprite": {
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "directions": ["right"],
+      "mirrorLeft": true,
+      "pivot": { "x": 0.5, "y": 0.9 }
+    },
+    "states": {
+      "idle": { "frameCount": 4, "fps": 6, "loop": true, "events": [], "onComplete": "idle" },
+      "walk": { "frameCount": 6, "fps": 12, "loop": true, "events": [], "onComplete": "walk" },
+      "jump_start": { "frameCount": 3, "fps": 12, "loop": false, "events": [], "onComplete": "rise" },
+      "rise": { "frameCount": 2, "fps": 8, "loop": true, "events": [], "onComplete": "rise" },
+      "fall": { "frameCount": 2, "fps": 8, "loop": true, "events": [], "onComplete": "fall" },
+      "land": { "frameCount": 3, "fps": 12, "loop": false, "events": [], "onComplete": "idle" },
+      "attack": {
+        "frameCount": 6,
+        "fps": 12,
+        "loop": false,
+        "events": [{ "frame": 3, "type": "spawn", "id": "weapon-primary" }],
+        "cancelAfterFrame": 5,
+        "onComplete": "idle"
+      },
+      "hurt": { "frameCount": 3, "fps": 12, "loop": false, "events": [], "onComplete": "idle" },
+      "launch": { "frameCount": 4, "fps": 12, "loop": false, "events": [], "onComplete": "tumble" },
+      "tumble": { "frameCount": 6, "fps": 12, "loop": true, "events": [], "onComplete": "tumble" },
+      "death": {
+        "frameCount": 8,
+        "fps": 10,
+        "loop": false,
+        "events": [{ "frame": 7, "type": "despawn", "id": "self" }],
+        "onComplete": "removed"
+      },
+      "ability": {
+        "frameCount": 8,
+        "fps": 12,
+        "loop": false,
+        "events": [{ "frame": 4, "type": "hit", "id": "ability" }],
+        "cancelAfterFrame": 6,
+        "onComplete": "idle"
+      }
+    }
+  },
+  "artBrief": {
+    "spriteSheet": "One right-facing body-only sheet per state, 256x256 cells, row-major frame order, transparent runtime PNG, feet-center pivot.",
+    "windUpCue": "Describe the readable startup cue.",
+    "impactCue": "Describe the body recoil and separate event-driven VFX cue.",
+    "recoveryCue": "Describe the punishable recovery cue.",
+    "avoid": [
+      "Named franchise characters, assets, logos, terminology, or move lists",
+      "Weapon, muzzle flash, projectile, impact, trail, or dust baked into body sheets",
+      "Unreadable details or asymmetry that breaks horizontal mirroring"
+    ]
+  },
+  "implementationNotes": {
+    "stateTransitions": [
+      "idle <-> walk",
+      "idle|walk -> jump_start -> rise -> fall -> land -> idle",
+      "idle|walk|rise|fall -> attack -> idle|rise|fall",
+      "any living state -> hurt|launch",
+      "launch -> tumble",
+      "any living state -> death -> removed"
+    ],
+    "eventsAreAuthoritative": true,
+    "notes": "Simulation owns events and transitions. Renderer only displays the selected state/frame and event-driven cosmetics."
+  }
+}
+

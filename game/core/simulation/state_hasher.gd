@@ -19,6 +19,8 @@ static func hash_state(state: SimState) -> int:
 		h = _mix(h, player.vy)
 		h = _mix(h, player.facing)
 		h = _mix(h, 1 if player.grounded else 0)
+		h = _mix(h, 1 if player.on_platform else 0)
+		h = _mix(h, 1 if player.drop_through_platform != null else 0)
 	return h
 
 static func _mix(h: int, value: int) -> int:

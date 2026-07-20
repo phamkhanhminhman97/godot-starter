@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "status": "art-proof",
+  "characterId": "nori-courier",
+  "runtime": {
+    "frameWidth": 256,
+    "frameHeight": 256,
+    "authoredFacing": "right",
+    "mirrorLeft": true,
+    "mirrorSafe": true,
+    "pivot": { "x": 0.5, "y": 0.9 },
+    "frameOrder": "row-major",
+    "textureFilter": "linear",
+    "weaponBakedIntoBody": true
+  },
+  "requiredStates": [
+    "idle", "walk", "jump_start", "rise", "fall", "land",
+    "attack", "hurt", "launch", "tumble", "death", "ability"
+  ],
+  "states": {
+    "idle": { "status": "qc-passed", "workspaceSheet": "art/tests/agent-sprite-forge/nori/idle/processed/sheet-transparent.png", "sheet": null, "rows": 2, "cols": 2, "frameCount": 4, "fps": 6, "loop": true, "events": [], "qcReport": "art/tests/agent-sprite-forge/nori/idle/processed/pipeline-meta.json" },
+    "walk": { "status": "conditional-pass", "workspaceSheet": "art/tests/agent-sprite-forge/nori/walk-v2/processed-approved/sheet-transparent.png", "sheet": null, "rows": 2, "cols": 3, "frameCount": 6, "fps": 12, "loop": true, "events": [], "qcReport": "art/tests/agent-sprite-forge/nori/walk-v2/processed-approved/pipeline-meta.json" },
+    "jump_start": { "status": "missing", "workspaceSheet": null, "sheet": null, "rows": 1, "cols": 3, "frameCount": 3, "fps": 12, "loop": false, "events": [], "qcReport": null },
+    "rise": { "status": "missing", "workspaceSheet": null, "sheet": null, "rows": 1, "cols": 2, "frameCount": 2, "fps": 8, "loop": true, "events": [], "qcReport": null },
+    "fall": { "status": "missing", "workspaceSheet": null, "sheet": null, "rows": 1, "cols": 2, "frameCount": 2, "fps": 8, "loop": true, "events": [], "qcReport": null },
+    "land": { "status": "missing", "workspaceSheet": null, "sheet": null, "rows": 1, "cols": 3, "frameCount": 3, "fps": 12, "loop": false, "events": [], "qcReport": null },
+    "attack": { "status": "qc-passed", "workspaceSheet": "art/tests/agent-sprite-forge/nori/attack-v2/processed/sheet-transparent.png", "sheet": null, "rows": 3, "cols": 3, "frameCount": 9, "fps": 12, "loop": false, "events": [{ "frame": 4, "type": "spawn", "id": "weapon-primary" }, { "frame": 4, "type": "sound", "id": "weapon-primary" }], "qcReport": "art/tests/agent-sprite-forge/nori/attack-v2/processed/pipeline-meta.json" },
+    "hurt": { "status": "qc-passed", "workspaceSheet": "art/tests/agent-sprite-forge/nori/hurt/processed/sheet-transparent.png", "sheet": null, "rows": 2, "cols": 2, "frameCount": 4, "fps": 12, "loop": false, "events": [{ "frame": 0, "type": "sound", "id": "nori-hurt" }], "qcReport": "art/tests/agent-sprite-forge/nori/hurt/processed/pipeline-meta.json" },
+    "launch": { "status": "missing", "workspaceSheet": null, "sheet": null, "rows": 2, "cols": 2, "frameCount": 4, "fps": 12, "loop": false, "events": [], "qcReport": null },
+    "tumble": { "status": "missing", "workspaceSheet": null, "sheet": null, "rows": 2, "cols": 3, "frameCount": 6, "fps": 12, "loop": true, "events": [], "qcReport": null },
+    "death": { "status": "missing", "workspaceSheet": null, "sheet": null, "rows": 2, "cols": 4, "frameCount": 8, "fps": 10, "loop": false, "events": [{ "frame": 7, "type": "despawn", "id": "self" }], "qcReport": null },
+    "ability": { "status": "missing", "workspaceSheet": null, "sheet": null, "rows": 2, "cols": 4, "frameCount": 8, "fps": 12, "loop": false, "events": [{ "frame": 4, "type": "hit", "id": "tailwind-brake" }], "qcReport": null }
+  },
+  "aliases": {},
+  "portraits": { "select": null, "hud": null }
+}
+

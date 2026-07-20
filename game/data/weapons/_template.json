@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "1.0",
+  "id": "replace-me",
+  "baseKnockbackUnitsPerTick": 0,
+  "fireRateTicks": 0,
+  "projectileSpeedUnitsPerTick": 0,
+  "recoilImpulseUnitsPerTick": 0,
+  "ammo": 0,
+  "projectileLifetimeTicks": 0,
+  "weaponTexture": "res://assets/weapons/replace-me/weapon.png",
+  "projectileTexture": "res://assets/weapons/replace-me/projectile.png",
+  "muzzleEffect": "res://assets/effects/replace-me-muzzle/asset-manifest.json",
+  "impactEffect": "res://assets/effects/replace-me-impact/asset-manifest.json"
+}
+

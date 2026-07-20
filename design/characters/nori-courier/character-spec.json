@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "1.0",
+  "identity": {
+    "id": "nori-courier",
+    "displayName": "Nori",
+    "role": "ranged pressure",
+    "fantasy": "A compact forest courier who controls space through quick movement and a readable universal firing stance.",
+    "silhouette": [
+      "Teal hood framing two rounded ears",
+      "Large ringed tail and rust-orange side satchel",
+      "Compact forward-ready posture"
+    ],
+    "palette": ["#17665F", "#E8D3A0", "#B75D2B", "#B2833C", "#302F2B"]
+  },
+  "combat": {
+    "model": "knockback-ringout",
+    "health": 0,
+    "weightPct": 92,
+    "moveSpeed": 108,
+    "primary": {
+      "name": "Courier Firing Stance",
+      "damage": 0,
+      "range": 0,
+      "startupFrames": 4,
+      "activeFrames": [4],
+      "recoveryFrames": 4,
+      "cooldownMs": 0,
+      "dataSource": "weapon",
+      "counterplay": "Advance during the crouched wind-up, bait the weapon event, then punish Nori during the open recovery pose."
+    },
+    "ability": {
+      "name": "Tailwind Brake",
+      "description": "Nori plants her feet and releases a short body-driven air burst to regain space.",
+      "cooldownMs": 7000,
+      "counterplay": "Jump over the low burst or wait outside its short range; Nori cannot move during startup.",
+      "interruption": "If interrupted before frame 4, no burst is created and the cooldown is not spent."
+    },
+    "weaknesses": [
+      "Low weight makes strong launch attacks dangerous near arena edges.",
+      "Attack and ability recoveries are punishable at close range."
+    ]
+  },
+  "animation": {
+    "sprite": {
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "directions": ["right"],
+      "mirrorLeft": true,
+      "pivot": { "x": 0.5, "y": 0.9 }
+    },
+    "states": {
+      "idle": { "frameCount": 4, "fps": 6, "loop": true, "events": [], "onComplete": "idle" },
+      "walk": { "frameCount": 6, "fps": 12, "loop": true, "events": [], "onComplete": "walk" },
+      "jump_start": { "frameCount": 3, "fps": 12, "loop": false, "events": [], "onComplete": "rise" },
+      "rise": { "frameCount": 2, "fps": 8, "loop": true, "events": [], "onComplete": "rise" },
+      "fall": { "frameCount": 2, "fps": 8, "loop": true, "events": [], "onComplete": "fall" },
+      "land": { "frameCount": 3, "fps": 12, "loop": false, "events": [], "onComplete": "idle" },
+      "attack": {
+        "frameCount": 9,
+        "fps": 12,
+        "loop": false,
+        "events": [
+          { "frame": 4, "type": "spawn", "id": "weapon-primary" },
+          { "frame": 4, "type": "sound", "id": "weapon-primary" }
+        ],
+        "cancelAfterFrame": 7,
+        "onComplete": "idle"
+      },
+      "hurt": { "frameCount": 4, "fps": 12, "loop": false, "events": [{ "frame": 0, "type": "sound", "id": "nori-hurt" }], "onComplete": "idle" },
+      "launch": { "frameCount": 4, "fps": 12, "loop": false, "events": [], "onComplete": "tumble" },
+      "tumble": { "frameCount": 6, "fps": 12, "loop": true, "events": [], "onComplete": "tumble" },
+      "death": { "frameCount": 8, "fps": 10, "loop": false, "events": [{ "frame": 7, "type": "despawn", "id": "self" }], "onComplete": "removed" },
+      "ability": { "frameCount": 8, "fps": 12, "loop": false, "events": [{ "frame": 4, "type": "hit", "id": "tailwind-brake" }], "cancelAfterFrame": 6, "onComplete": "idle" }
+    }
+  },
+  "artBrief": {
+    "spriteSheet": "One independent right-facing body-only sheet per state, 256x256 cells, row-major order, transparent runtime PNG, feet-center pivot.",
+    "windUpCue": "Nori lowers her stance and visibly braces before the event frame.",
+    "impactCue": "Body recoil is readable while weapon muzzle/projectile/impact remain separate event-driven assets.",
+    "recoveryCue": "Nori opens her stance and lowers her hands for two readable recovery frames.",
+    "avoid": [
+      "Named franchise characters, assets, logos, terminology, or move lists",
+      "Specific weapon, muzzle flash, projectile, impact, dust, or trail baked into production body sheets",
+      "Unreadable detail or frame-to-frame identity drift"
+    ]
+  },
+  "implementationNotes": {
+    "stateTransitions": [
+      "idle <-> walk",
+      "idle|walk -> jump_start -> rise -> fall -> land -> idle",
+      "idle|walk|rise|fall -> attack",
+      "any living state -> hurt|launch",
+      "launch -> tumble",
+      "any living state -> death -> removed"
+    ],
+    "eventsAreAuthoritative": true,
+    "notes": "Character and weapon data are composed at runtime. Simulation owns events, knockback, and transitions; renderer only displays frames and event-driven cosmetics."
+  }
+}
+
