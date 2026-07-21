@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "1.0",
+  "characterId": "sasu",
+  "targetStatus": "qc-passed",
+  "currentPhase": "identity",
+  "identity": {
+    "status": "in-progress",
+    "master": null,
+    "turnaround": null,
+    "palette": null,
+    "scaleProfile": null
+  },
+  "states": {
+    "idle": {
+      "status": "pending",
+      "attempt": 0,
+      "nextAction": "lock-identity-master"
+    },
+    "walk": {
+      "status": "pending",
+      "attempt": 0,
+      "nextAction": "wait-for-identity-lock"
+    },
+    "jump_start": {
+      "status": "pending",
+      "attempt": 0,
+      "nextAction": "wait-for-identity-lock"
+    },
+    "rise": {
+      "status": "pending",
+      "attempt": 0,
+      "nextAction": "wait-for-identity-lock"
+    },
+    "fall": {
+      "status": "pending",
+      "attempt": 0,
+      "nextAction": "wait-for-identity-lock"
+    },
+    "land": {
+      "status": "pending",
+      "attempt": 0,
+      "nextAction": "wait-for-identity-lock"
+    },
+    "attack": {
+      "status": "pending",
+      "attempt": 0,
+      "nextAction": "wait-for-identity-lock"
+    },
+    "hurt": {
+      "status": "pending",
+      "attempt": 0,
+      "nextAction": "wait-for-identity-lock"
+    },
+    "launch": {
+      "status": "pending",
+      "attempt": 0,
+      "nextAction": "wait-for-identity-lock"
+    },
+    "tumble": {
+      "status": "pending",
+      "attempt": 0,
+      "nextAction": "wait-for-identity-lock"
+    },
+    "death": {
+      "status": "pending",
+      "attempt": 0,
+      "nextAction": "wait-for-identity-lock"
+    },
+    "ability": {
+      "status": "pending",
+      "attempt": 0,
+      "nextAction": "wait-for-identity-lock"
+    }
+  },
+  "promotion": {
+    "preflight": "not-run",
+    "approvedForPromotion": false,
+    "promotedAt": null
+  }
+}

@@ -1,0 +1,238 @@
+{
+  "schemaVersion": "1.0",
+  "status": "draft",
+  "characterId": "sasu",
+  "runtime": {
+    "frameWidth": 256,
+    "frameHeight": 256,
+    "authoredFacing": "right",
+    "mirrorLeft": true,
+    "mirrorSafe": false,
+    "pivot": {
+      "x": 0.5,
+      "y": 0.9
+    },
+    "frameOrder": "row-major",
+    "textureFilter": "linear",
+    "weaponBakedIntoBody": false
+  },
+  "requiredStates": [
+    "idle",
+    "walk",
+    "jump_start",
+    "rise",
+    "fall",
+    "land",
+    "attack",
+    "hurt",
+    "launch",
+    "tumble",
+    "death",
+    "ability"
+  ],
+  "states": {
+    "idle": {
+      "status": "missing",
+      "workspaceSheet": null,
+      "sheet": null,
+      "rows": 2,
+      "cols": 2,
+      "frameCount": 4,
+      "fps": 6,
+      "loop": true,
+      "events": [],
+      "cancelAfterFrame": null,
+      "onComplete": "idle",
+      "qcPolicy": "grounded-body",
+      "qcReport": null
+    },
+    "walk": {
+      "status": "missing",
+      "workspaceSheet": null,
+      "sheet": null,
+      "rows": 2,
+      "cols": 3,
+      "frameCount": 6,
+      "fps": 12,
+      "loop": true,
+      "events": [],
+      "cancelAfterFrame": null,
+      "onComplete": "walk",
+      "qcPolicy": "grounded-body",
+      "qcReport": null
+    },
+    "jump_start": {
+      "status": "missing",
+      "workspaceSheet": null,
+      "sheet": null,
+      "rows": 1,
+      "cols": 3,
+      "frameCount": 3,
+      "fps": 12,
+      "loop": false,
+      "events": [],
+      "cancelAfterFrame": null,
+      "onComplete": "rise",
+      "qcPolicy": "grounded-body",
+      "qcReport": null
+    },
+    "rise": {
+      "status": "missing",
+      "workspaceSheet": null,
+      "sheet": null,
+      "rows": 1,
+      "cols": 2,
+      "frameCount": 2,
+      "fps": 8,
+      "loop": true,
+      "events": [],
+      "cancelAfterFrame": null,
+      "onComplete": "rise",
+      "qcPolicy": "airborne-body",
+      "qcReport": null
+    },
+    "fall": {
+      "status": "missing",
+      "workspaceSheet": null,
+      "sheet": null,
+      "rows": 1,
+      "cols": 2,
+      "frameCount": 2,
+      "fps": 8,
+      "loop": true,
+      "events": [],
+      "cancelAfterFrame": null,
+      "onComplete": "fall",
+      "qcPolicy": "airborne-body",
+      "qcReport": null
+    },
+    "land": {
+      "status": "missing",
+      "workspaceSheet": null,
+      "sheet": null,
+      "rows": 1,
+      "cols": 3,
+      "frameCount": 3,
+      "fps": 12,
+      "loop": false,
+      "events": [],
+      "cancelAfterFrame": null,
+      "onComplete": "idle",
+      "qcPolicy": "grounded-body",
+      "qcReport": null
+    },
+    "attack": {
+      "status": "missing",
+      "workspaceSheet": null,
+      "sheet": null,
+      "rows": 2,
+      "cols": 3,
+      "frameCount": 6,
+      "fps": 12,
+      "loop": false,
+      "events": [
+        {
+          "frame": 3,
+          "type": "spawn",
+          "id": "weapon-primary"
+        }
+      ],
+      "cancelAfterFrame": 5,
+      "onComplete": "idle",
+      "qcPolicy": "grounded-body",
+      "qcReport": null
+    },
+    "hurt": {
+      "status": "missing",
+      "workspaceSheet": null,
+      "sheet": null,
+      "rows": 1,
+      "cols": 3,
+      "frameCount": 3,
+      "fps": 12,
+      "loop": false,
+      "events": [],
+      "cancelAfterFrame": null,
+      "onComplete": "idle",
+      "qcPolicy": "silhouette-changing-body",
+      "qcReport": null
+    },
+    "launch": {
+      "status": "missing",
+      "workspaceSheet": null,
+      "sheet": null,
+      "rows": 2,
+      "cols": 2,
+      "frameCount": 4,
+      "fps": 12,
+      "loop": false,
+      "events": [],
+      "cancelAfterFrame": null,
+      "onComplete": "tumble",
+      "qcPolicy": "airborne-body",
+      "qcReport": null
+    },
+    "tumble": {
+      "status": "missing",
+      "workspaceSheet": null,
+      "sheet": null,
+      "rows": 2,
+      "cols": 3,
+      "frameCount": 6,
+      "fps": 12,
+      "loop": true,
+      "events": [],
+      "cancelAfterFrame": null,
+      "onComplete": "tumble",
+      "qcPolicy": "airborne-body",
+      "qcReport": null
+    },
+    "death": {
+      "status": "missing",
+      "workspaceSheet": null,
+      "sheet": null,
+      "rows": 2,
+      "cols": 4,
+      "frameCount": 8,
+      "fps": 10,
+      "loop": false,
+      "events": [
+        {
+          "frame": 7,
+          "type": "despawn",
+          "id": "self"
+        }
+      ],
+      "cancelAfterFrame": null,
+      "onComplete": "removed",
+      "qcPolicy": "silhouette-changing-body",
+      "qcReport": null
+    },
+    "ability": {
+      "status": "missing",
+      "workspaceSheet": null,
+      "sheet": null,
+      "rows": 2,
+      "cols": 4,
+      "frameCount": 8,
+      "fps": 12,
+      "loop": false,
+      "events": [
+        {
+          "frame": 4,
+          "type": "hit",
+          "id": "low-breach"
+        }
+      ],
+      "cancelAfterFrame": 6,
+      "onComplete": "idle",
+      "qcPolicy": "grounded-body",
+      "qcReport": null
+    }
+  },
+  "aliases": {},
+  "portraits": {
+    "select": null,
+    "hud": null
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "characterId": "replace-me",
+  "targetStatus": "qc-passed",
+  "currentPhase": "design",
+  "identity": {
+    "status": "pending",
+    "master": null,
+    "turnaround": null,
+    "palette": null,
+    "scaleProfile": null
+  },
+  "states": {
+    "idle": { "status": "blocked-by-design", "attempt": 0, "nextAction": "wait-for-complete-spec" },
+    "walk": { "status": "blocked-by-design", "attempt": 0, "nextAction": "wait-for-complete-spec" },
+    "jump_start": { "status": "blocked-by-design", "attempt": 0, "nextAction": "wait-for-complete-spec" },
+    "rise": { "status": "blocked-by-design", "attempt": 0, "nextAction": "wait-for-complete-spec" },
+    "fall": { "status": "blocked-by-design", "attempt": 0, "nextAction": "wait-for-complete-spec" },
+    "land": { "status": "blocked-by-design", "attempt": 0, "nextAction": "wait-for-complete-spec" },
+    "attack": { "status": "blocked-by-design", "attempt": 0, "nextAction": "wait-for-complete-spec" },
+    "hurt": { "status": "blocked-by-design", "attempt": 0, "nextAction": "wait-for-complete-spec" },
+    "launch": { "status": "blocked-by-design", "attempt": 0, "nextAction": "wait-for-complete-spec" },
+    "tumble": { "status": "blocked-by-design", "attempt": 0, "nextAction": "wait-for-complete-spec" },
+    "death": { "status": "blocked-by-design", "attempt": 0, "nextAction": "wait-for-complete-spec" },
+    "ability": { "status": "blocked-by-design", "attempt": 0, "nextAction": "wait-for-complete-spec" }
+  },
+  "promotion": {
+    "preflight": "not-run",
+    "approvedForPromotion": false,
+    "promotedAt": null
+  }
+}

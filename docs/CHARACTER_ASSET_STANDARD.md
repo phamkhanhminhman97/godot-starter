@@ -22,9 +22,11 @@ game/assets/characters/<id>/  immutable approved runtime delivery
 
 | Concern | Source of truth | May contain |
 |---|---|---|
+| Original user intent and agent scope | `character-brief.json` | Natural-language brief, target, locked constraints |
 | Identity, role, weakness, moves, timing | `character-spec.json` | Design and deterministic events |
 | Sheet layout and runtime paths | `asset-manifest.json` | Presentation metadata only |
-| Acceptance evidence and exceptions | `qa-approval.json` | Measurements and human review |
+| Resumable production queue | `production-plan.json` | Phase, attempts, accepted sources, next action |
+| Acceptance evidence and exceptions | `qa-approval.json` | Measurements and agent/human visual review |
 | Character movement/weight | `game/data/characters/<id>.json` | Integer simulation data |
 | Weapon behavior | `game/data/weapons/<id>.json` | Weapon data and projectile references |
 | Runtime pixels | `game/assets/characters/<id>/` | Approved RGBA PNG only |
@@ -39,10 +41,14 @@ design/characters/
 ├── _template/
 │   ├── character-spec.json
 │   ├── asset-manifest.json
-│   └── qa-approval.json
+│   ├── qa-approval.json
+│   ├── character-brief.json
+│   └── production-plan.json
 └── <character-id>/
+    ├── character-brief.json
     ├── character-spec.json
     ├── asset-manifest.json
+    ├── production-plan.json
     ├── qa-approval.json
     └── notes.md                     # optional decisions, never runtime data
 
@@ -60,6 +66,7 @@ art/work/characters/<character-id>/
 ├── scale-profile.json
 ├── actions/
 │   └── <state>/
+│       ├── references/              # action anchor/layout guides
 │       ├── prompt-used.txt
 │       ├── raw-sheet.png
 │       ├── processed/
@@ -168,6 +175,10 @@ approved character spec
 → promotion gate
 ```
 
+`production-plan.json` is the agent hand-off ledger. After each attempt the
+agent records the state status, attempt number, and exact next action. An agent
+must resume from this file instead of regenerating already accepted work.
+
 Dynamic states such as attack, launch, tumble, and death should use square cells
 with generous padding. Nori's first attack proved that narrow rectangular cells
 can crop extended poses even when the overall image looks plausible.
@@ -192,6 +203,11 @@ Hurt, launch, tumble, airborne, and silhouette-changing actions may have an
 action-specific threshold. The exception must preserve full anatomy, contain no
 output crop/clamp, be visually reviewed, and be recorded in `qa-approval.json`.
 Never weaken the global gate because one generation failed.
+
+An approved threshold exception uses the exact metric ID (`body_scale_cv`,
+`profile_body_scale_drift`, or `anchor_y_std`), includes `approved: true`, and
+records the observed value and reason. Empty frames, output edge contact, and
+paste clamping are never exception-eligible for promotion.
 
 ## Visual QA
 
@@ -234,30 +250,63 @@ draft → art-proof → qc-passed → godot-ready
 
 - `draft`: design is still changing.
 - `art-proof`: enough output to test identity/pipeline; not runtime content.
-- `qc-passed`: all required art and metadata passed asset checks.
-- `godot-ready`: QA approved, runtime paths exist, validator passes, and the
-  shared loader can consume the bundle without manual character-specific work.
+- `qc-passed`: all required art and metadata passed asset checks and the agent
+  reviewer set `approvedForPromotion: true` with no blockers.
+- `godot-ready`: the promotion tool copied sanitized runtime assets, runtime
+  paths exist, and the strict validator passes. This status does not mean Godot
+  gameplay or the shared presentation loader has already been implemented.
 
 Run:
 
 ```bash
 python3 tools/validate_character_bundle.py --character <character-id>
+python3 tools/validate_character_bundle.py --character <character-id> --require-promotable
 python3 tools/validate_character_bundle.py --character <character-id> --require-ready
 ```
 
-The second command is the promotion gate.
+The second command is the pre-promotion gate. The third is the post-promotion
+runtime gate.
 
-To start the next character, copy the complete design template first, rename
-the directory to the final immutable character ID, then replace every
-`replace-me` value before generating art:
+To start the next character, use the scaffold command. It creates design truth,
+the resumable production plan, and every canonical art workspace directory:
 
 ```bash
-cp -R design/characters/_template design/characters/<character-id>
+python3 tools/new_character_bundle.py \
+  --id <character-id> \
+  --name "<display name>" \
+  --brief "<natural-language character idea>"
 python3 tools/validate_character_bundle.py --character <character-id>
 ```
 
-The first validation should fail only on fields that are intentionally still
-draft. Do not create a second ad-hoc folder structure for a new character.
+The first validation intentionally rejects agent placeholders. The agent must
+use `original-pvp-character-design` to complete role, weakness, timing,
+counterplay, deterministic events, and art brief before image generation. Do
+not create a second ad-hoc folder structure for a new character.
+
+After all state sheets and reports live under `art/work/characters/<id>/`, the
+manifest is `qc-passed`, and QA approves promotion, run:
+
+```bash
+python3 tools/promote_character_bundle.py --character <character-id> --dry-run
+python3 tools/promote_character_bundle.py --character <character-id>
+```
+
+The command refuses overwrite, stages copies before publishing, writes a
+sanitized runtime manifest, updates the two approval phases, validates the
+result, and rolls back on failure. It does not create Godot scenes or gameplay.
+
+## One-line autonomous request
+
+This is sufficient input for an agent:
+
+> Dựa vào AGENTS.md, tạo nhân vật Miso: một chú chó nhỏ đeo nồi đất làm giáp,
+> chuyên giữ khoảng cách gần và phản đòn chậm nhưng mạnh. Hoàn thành tới
+> qc-passed, chưa làm Godot.
+
+The agent owns role selection, counterplay, full spec, identity lock, prompts,
+state grids, processing parameters, numeric QC, visual QC, rejected attempts,
+manifest updates, and the final report. The user still owns the final creative
+direction and may reject an identity even when it passes technical QC.
 
 ## Worked example: Nori
 
@@ -270,7 +319,7 @@ record and documents real blockers:
 - the proof frames bake a brass pistol into the body, which violates the locked
   character/weapon separation;
 - walk required a reviewed relaxed anchor threshold and source-edge allowance;
-- no shared Godot manifest loader exists yet.
+- current proof files live under `art/tests/`, not the production workspace.
 
 This honesty is part of the standard: incomplete assets may be useful evidence,
 but they must not silently become production assets.

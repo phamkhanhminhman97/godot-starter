@@ -1,0 +1,4 @@
+Accepted prompt contract: exact 2x2 four-frame grounded jump-start for locked
+Naru on solid #FF00FF: ready, bend, deep compression, toe-off preparation.
+Right-facing, same idle body scale, feet baseline preserved until the last pose,
+no airborne travel, weapon, dust, shadow, text, or VFX.

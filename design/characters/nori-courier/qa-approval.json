@@ -1,6 +1,7 @@
 {
   "schemaVersion": "1.0",
   "characterId": "nori-courier",
+  "approvedForPromotion": false,
   "approvedForGodot": false,
   "reviewedAt": "2026-07-20",
   "reviewer": "Codex art-pipeline proof",
@@ -42,9 +43,7 @@
     "Current proof body sheets bake a brass pistol into Nori and violate CharacterData x WeaponData separation.",
     "Identity turnaround and production identity master are not approved.",
     "Walk must be regenerated to pass the normal grounded anchor gate without an exception.",
-    "No approved runtime PNG paths exist under game/assets/characters/nori-courier/.",
-    "Shared Godot character manifest loader has not been implemented or tested."
+    "No approved runtime PNG paths exist under game/assets/characters/nori-courier/."
   ],
   "notes": "Nori is evidence that the pipeline can preserve identity across difficult poses. It is not a shippable or Godot-ready bundle."
 }
-

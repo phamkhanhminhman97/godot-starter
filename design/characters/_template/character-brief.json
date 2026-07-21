@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "characterId": "replace-me",
+  "displayName": "Replace Me",
+  "userBrief": "Replace with the user's natural-language character idea.",
+  "autonomyMode": "agent-led",
+  "targetStatus": "qc-passed",
+  "lockedConstraints": [
+    "Original IP only",
+    "Exactly one primary role",
+    "At least one explicit weakness",
+    "Startup, recovery, interruption, and counterplay for every strong action",
+    "Right-facing body-only 256x256 RGBA frames",
+    "Character body remains compatible with every supported weapon"
+  ],
+  "agentDecisions": [
+    "Primary role and gameplay fantasy",
+    "Weaknesses and counterplay windows",
+    "Silhouette, palette, and identity anchors",
+    "Deterministic action timing and animation events",
+    "Per-state grid, prompt, processing settings, and QC disposition"
+  ],
+  "outOfScope": [
+    "Godot gameplay implementation",
+    "Weapon statistics",
+    "World building, roster expansion, progression, and monetization"
+  ]
+}

@@ -1,6 +1,7 @@
 {
   "schemaVersion": "1.0",
   "characterId": "replace-me",
+  "approvedForPromotion": false,
   "approvedForGodot": false,
   "reviewedAt": null,
   "reviewer": null,
@@ -19,6 +20,5 @@
   "stateResults": {},
   "exceptions": [],
   "blockers": ["Replace with the current concrete blockers."],
-  "notes": "Approval becomes true only after every promotion gate passes."
+  "notes": "The reviewer sets approvedForPromotion after asset QA. promote_character_bundle sets approvedForGodot only after runtime delivery validates."
 }
-

@@ -1,0 +1,211 @@
+{
+  "schemaVersion": "1.0",
+  "identity": {
+    "id": "sasu",
+    "displayName": "Sasu",
+    "role": "mobility skirmisher",
+    "fantasy": "A tiny ninja cat who wins by closing and resetting distance faster than opponents can re-establish spacing, using a swift ninja dash.",
+    "silhouette": [
+      "Sleek black ninja hood that reveals pointed cat ears",
+      "Lightweight dark blue and purple shinobi tunic",
+      "Thin upright cat tail that peeks out from the back"
+    ],
+    "palette": [
+      "#1A1A24",
+      "#3D3D5C",
+      "#8B8FA3",
+      "#D9D3C7",
+      "#12171C"
+    ]
+  },
+  "combat": {
+    "model": "knockback-ringout",
+    "health": 0,
+    "weightPct": 84,
+    "moveSpeed": 118,
+    "primary": {
+      "name": "Ninja Kunai Stance",
+      "damage": 0,
+      "range": 0,
+      "startupFrames": 3,
+      "activeFrames": [
+        3
+      ],
+      "recoveryFrames": 2,
+      "cooldownMs": 0,
+      "dataSource": "weapon",
+      "counterplay": "Sasu must be close to threaten, so hold a spacing just outside her advance step and punish the open recovery pose when she commits and whiffs.",
+      "interruption": "If interrupted before frame 3, no weapon event spawns and the action is cancelled."
+    },
+    "ability": {
+      "name": "Shadow Dash",
+      "description": "Sasu drops low and dashes forward quickly.",
+      "startupFrames": 4,
+      "activeFrames": [
+        4
+      ],
+      "recoveryFrames": 3,
+      "cooldownMs": 6000,
+      "counterplay": "Low Breach travels a straight line at a fixed low height with a visible crouch tell; jump over it or step off the line during the startup, then punish the extended recovery.",
+      "interruption": "If interrupted before frame 4, no push is applied, no forward drive occurs, and the cooldown is not spent."
+    },
+    "weaknesses": [
+      "Very low body weight makes Sasu travel much further per hit than average, so she loses stocks near the arena edge far earlier than heavier fighters.",
+      "Low Breach commits to a straight line and cannot be steered after frame 4, so a whiffed breach leaves a long punishable recovery."
+    ]
+  },
+  "animation": {
+    "sprite": {
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "directions": [
+        "right"
+      ],
+      "mirrorLeft": true,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    "states": {
+      "idle": {
+        "frameCount": 4,
+        "fps": 6,
+        "loop": true,
+        "events": [],
+        "cancelAfterFrame": null,
+        "onComplete": "idle"
+      },
+      "walk": {
+        "frameCount": 6,
+        "fps": 12,
+        "loop": true,
+        "events": [],
+        "cancelAfterFrame": null,
+        "onComplete": "walk"
+      },
+      "jump_start": {
+        "frameCount": 3,
+        "fps": 12,
+        "loop": false,
+        "events": [],
+        "cancelAfterFrame": null,
+        "onComplete": "rise"
+      },
+      "rise": {
+        "frameCount": 2,
+        "fps": 8,
+        "loop": true,
+        "events": [],
+        "cancelAfterFrame": null,
+        "onComplete": "rise"
+      },
+      "fall": {
+        "frameCount": 2,
+        "fps": 8,
+        "loop": true,
+        "events": [],
+        "cancelAfterFrame": null,
+        "onComplete": "fall"
+      },
+      "land": {
+        "frameCount": 3,
+        "fps": 12,
+        "loop": false,
+        "events": [],
+        "cancelAfterFrame": null,
+        "onComplete": "idle"
+      },
+      "attack": {
+        "frameCount": 6,
+        "fps": 12,
+        "loop": false,
+        "events": [
+          {
+            "frame": 3,
+            "type": "spawn",
+            "id": "weapon-primary"
+          }
+        ],
+        "cancelAfterFrame": 5,
+        "onComplete": "idle"
+      },
+      "hurt": {
+        "frameCount": 3,
+        "fps": 12,
+        "loop": false,
+        "events": [],
+        "cancelAfterFrame": null,
+        "onComplete": "idle"
+      },
+      "launch": {
+        "frameCount": 4,
+        "fps": 12,
+        "loop": false,
+        "events": [],
+        "cancelAfterFrame": null,
+        "onComplete": "tumble"
+      },
+      "tumble": {
+        "frameCount": 6,
+        "fps": 12,
+        "loop": true,
+        "events": [],
+        "cancelAfterFrame": null,
+        "onComplete": "tumble"
+      },
+      "death": {
+        "frameCount": 8,
+        "fps": 10,
+        "loop": false,
+        "events": [
+          {
+            "frame": 7,
+            "type": "despawn",
+            "id": "self"
+          }
+        ],
+        "cancelAfterFrame": null,
+        "onComplete": "removed"
+      },
+      "ability": {
+        "frameCount": 8,
+        "fps": 12,
+        "loop": false,
+        "events": [
+          {
+            "frame": 4,
+            "type": "hit",
+            "id": "low-breach"
+          }
+        ],
+        "cancelAfterFrame": 6,
+        "onComplete": "idle"
+      }
+    }
+  },
+  "artBrief": {
+    "spriteSheet": "One right-facing body-only sheet per state, 256x256 cells, row-major frame order, transparent runtime PNG, feet-center pivot.",
+    "windUpCue": "For Shadow Dash, Sasu drops hips low and tucks arms in, cat ears folding back slightly.",
+    "impactCue": "Body remains compact during the forward drive. No integrated hit effects.",
+    "recoveryCue": "Sasu skids to a halt, one hand on the ground, before returning to idle stance.",
+    "avoid": [
+      "Named franchise characters, assets, logos, terminology, or move lists",
+      "Weapon, muzzle flash, projectile, impact, trail, or dust baked into body sheets",
+      "Unreadable details or asymmetry that breaks horizontal mirroring",
+      "Insignia, rank patches, unit numbers, flags, or any readable text on the uniform"
+    ]
+  },
+  "implementationNotes": {
+    "stateTransitions": [
+      "idle <-> walk",
+      "idle|walk -> jump_start -> rise -> fall -> land -> idle",
+      "idle|walk|rise|fall -> attack -> idle|rise|fall",
+      "any living state -> hurt|launch",
+      "launch -> tumble",
+      "any living state -> death -> removed"
+    ],
+    "eventsAreAuthoritative": true,
+    "notes": "Simulation owns dash trajectory and hit evaluation. Sasu is a small ninja cat; body sheets remain weapon-free."
+  }
+}

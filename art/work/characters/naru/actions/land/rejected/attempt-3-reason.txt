@@ -1,0 +1,7 @@
+Rejected by strict numeric QC.
+
+- anchor_y_std: 0.0572 (maximum 0.0500)
+- profile_body_scale_drift: 0.0892 (maximum 0.0800)
+
+The sequence reads as a landing, but its feet anchor and body scale drift too far
+from the locked idle profile. The validation thresholds were not changed.

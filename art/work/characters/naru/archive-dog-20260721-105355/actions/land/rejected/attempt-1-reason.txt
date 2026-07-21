@@ -1,0 +1,2 @@
+Rejected by visual QC: the chronological landing sequence was wrong and showed
+airborne motion after ground contact, so it could not match the state contract.

@@ -1,0 +1,4 @@
+Accepted prompt contract: clean-HD Naru identity, exact 2x2 four-frame idle
+breathing loop on solid #FF00FF, right-facing, feet on one baseline, charcoal
+pointed hood, red scarf, teal belt, cream paw wraps, no weapon or VFX, generous
+cell margins, identical scale and proportions in every row-major frame.

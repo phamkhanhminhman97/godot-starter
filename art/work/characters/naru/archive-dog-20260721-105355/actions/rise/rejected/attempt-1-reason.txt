@@ -1,0 +1,2 @@
+Rejected by strict QC: raw source frame at grid [1,1] contacted the cell edge.
+The output appeared usable, but source-edge safety is required for clean frames.

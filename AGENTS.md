@@ -23,6 +23,57 @@ When generating or processing sprite art, use the `generate2dsprite` workflow.
 Raw AI output is never a runtime asset. It must pass deterministic processing,
 visual review, and bundle validation first.
 
+## Default agent-led character workflow
+
+When the user gives a natural-language character idea and asks the agent to
+follow this file, treat it as authorization to complete the character asset
+pipeline. Do not ask the user to choose role, frame budget, grid, palette,
+counterplay, or processor flags unless two interpretations would materially
+change the requested fantasy.
+
+1. Choose a stable kebab-case ID and run:
+
+   ```bash
+   python3 tools/new_character_bundle.py \
+     --id <character-id> \
+     --name "<display name>" \
+     --brief "<user's original description>"
+   ```
+
+2. Use `original-pvp-character-design` to replace every agent placeholder in
+   `character-spec.json`. Choose exactly one primary role; define weakness,
+   startup, active frames, recovery, interruption, and specific counterplay.
+3. Synchronize every animation contract field into `asset-manifest.json`, run
+   `validate_character_bundle.py`, and fix all design errors before generating
+   visual frames.
+4. Use `generate2dsprite` to lock one identity master, turnaround, palette, and
+   scale profile. Then process one action at a time in the order recorded in
+   `production-plan.json`. Update the plan after every accepted or rejected
+   attempt so another agent can resume without guessing.
+5. Inspect the master, raw sheet, transparent sheet, animation preview,
+   gameplay-scale preview, mirror preview, and QC report. Numeric QC alone is
+   never approval. Store failed attempts under the action's `rejected/` folder
+   with a short reason; never hide them by weakening global thresholds.
+6. A state becomes `approved` only when its `workspaceSheet` and `qcReport`
+   point inside `art/work/characters/<id>/`, deterministic timing matches the
+   spec, and both numeric and visual QA pass. Set the bundle to `qc-passed` only
+   after all required states or approved aliases pass.
+7. Set `approvedForPromotion: true` only with reviewer, review date, completed
+   checks, state results, and no blockers. The promotion tool alone sets
+   `approvedForGodot: true` after runtime files validate.
+
+The default target for character-only requests is `qc-passed`; do not implement
+Godot gameplay or world content. Promote only when the user asks for a runtime
+bundle or explicitly asks for `godot-ready`:
+
+```bash
+python3 tools/promote_character_bundle.py --character <character-id> --dry-run
+python3 tools/promote_character_bundle.py --character <character-id>
+```
+
+The promotion command never overwrites an existing runtime bundle and rolls
+back partial writes when final validation fails.
+
 ## Authoritative boundaries
 
 - Simulation/server owns state changes, hit checks, projectile spawn, knockback,
@@ -108,11 +159,56 @@ true:
 6. Mirror, gameplay-scale readability, animation loop, and event timing have
    been visually tested.
 7. `weaponBakedIntoBody` is false.
-8. `qa-approval.json` has `approvedForGodot: true`.
-9. `python3 tools/validate_character_bundle.py --character <id> --require-ready`
+8. `qa-approval.json` has `approvedForPromotion: true` with no blockers.
+9. `python3 tools/validate_character_bundle.py --character <id> --require-promotable`
    passes.
+10. `tools/promote_character_bundle.py` copies the approved workspace sheets,
+    sets runtime paths, and makes `--require-ready` pass transactionally.
 
 Never change validation thresholds merely to make a failed asset pass. Keep
 failed attempts for evidence, regenerate or fix the source, and record any real
 exception with a reason and reviewer.
 
+<!-- gitnexus:start -->
+# GitNexus — Code Intelligence
+
+This project is indexed by GitNexus as **godot-starter** (2408 symbols, 2839 relationships, 43 execution flows). Use the GitNexus MCP tools to understand code, assess impact, and navigate safely.
+
+> If any GitNexus tool warns the index is stale, run `npx gitnexus analyze` in terminal first.
+
+## Always Do
+
+- **MUST run impact analysis before editing any symbol.** Before modifying a function, class, or method, run `gitnexus_impact({target: "symbolName", direction: "upstream"})` and report the blast radius (direct callers, affected processes, risk level) to the user.
+- **MUST run `gitnexus_detect_changes()` before committing** to verify your changes only affect expected symbols and execution flows.
+- **MUST warn the user** if impact analysis returns HIGH or CRITICAL risk before proceeding with edits.
+- When exploring unfamiliar code, use `gitnexus_query({query: "concept"})` to find execution flows instead of grepping. It returns process-grouped results ranked by relevance.
+- When you need full context on a specific symbol — callers, callees, which execution flows it participates in — use `gitnexus_context({name: "symbolName"})`.
+
+## Never Do
+
+- NEVER edit a function, class, or method without first running `gitnexus_impact` on it.
+- NEVER ignore HIGH or CRITICAL risk warnings from impact analysis.
+- NEVER rename symbols with find-and-replace — use `gitnexus_rename` which understands the call graph.
+- NEVER commit changes without running `gitnexus_detect_changes()` to check affected scope.
+
+## Resources
+
+| Resource | Use for |
+|----------|---------|
+| `gitnexus://repo/godot-starter/context` | Codebase overview, check index freshness |
+| `gitnexus://repo/godot-starter/clusters` | All functional areas |
+| `gitnexus://repo/godot-starter/processes` | All execution flows |
+| `gitnexus://repo/godot-starter/process/{name}` | Step-by-step execution trace |
+
+## CLI
+
+| Task | Read this skill file |
+|------|---------------------|
+| Understand architecture / "How does X work?" | `.claude/skills/gitnexus/gitnexus-exploring/SKILL.md` |
+| Blast radius / "What breaks if I change X?" | `.claude/skills/gitnexus/gitnexus-impact-analysis/SKILL.md` |
+| Trace bugs / "Why is X failing?" | `.claude/skills/gitnexus/gitnexus-debugging/SKILL.md` |
+| Rename / extract / split / refactor | `.claude/skills/gitnexus/gitnexus-refactoring/SKILL.md` |
+| Tools, resources, schema reference | `.claude/skills/gitnexus/gitnexus-guide/SKILL.md` |
+| Index, status, clean, wiki CLI commands | `.claude/skills/gitnexus/gitnexus-cli/SKILL.md` |
+
+<!-- gitnexus:end -->

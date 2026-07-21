@@ -1,0 +1,4 @@
+Accepted prompt contract: exact 2x2 four-frame hurt recoil for locked Naru on
+solid #FF00FF. Immediate readable body recoil and controlled return, centered
+silhouette, right-facing identity preserved. No impact burst, weapon, projectile,
+damage text, stars, shadow, trail, crop, or detached component.

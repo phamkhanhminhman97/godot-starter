@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "1.0",
+  "characterId": "sasu",
+  "displayName": "Sasu",
+  "userBrief": "m\u00e8o nh\u1ecf m\u1eb7c \u0111\u1ed3 ninja; Ho\u00e0n th\u00e0nh t\u1edbi qc-passed; no Godot; generate2dsprite only",
+  "autonomyMode": "agent-led",
+  "targetStatus": "qc-passed",
+  "lockedConstraints": [
+    "Original IP only",
+    "Exactly one primary role",
+    "At least one explicit weakness",
+    "Startup, recovery, interruption, and counterplay for every strong action",
+    "Right-facing body-only 256x256 RGBA frames",
+    "Character body remains compatible with every supported weapon"
+  ],
+  "agentDecisions": [
+    "Primary role and gameplay fantasy",
+    "Weaknesses and counterplay windows",
+    "Silhouette, palette, and identity anchors",
+    "Deterministic action timing and animation events",
+    "Per-state grid, prompt, processing settings, and QC disposition"
+  ],
+  "outOfScope": [
+    "Godot gameplay implementation",
+    "Weapon statistics",
+    "World building, roster expansion, progression, and monetization"
+  ],
+  "constraints": {
+    "species": "small ninja cat",
+    "artStyle": "clean_hd",
+    "weaponSeparated": true,
+    "noGodot": true
+  }
+}

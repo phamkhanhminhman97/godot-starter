@@ -1,0 +1,5 @@
+Accepted source: image edit of rejected attempt 5. Preserve its exact 2x2
+grounded contact, shallow bend, braced crouch, ready sequence and locked Naru
+identity on #FF00FF. Uniformly enlarge each complete silhouette 1.25x around its
+foot-center anchor, restore the shared foot baseline at 80% cell height, retain
+generous margins, and add no weapon, dust, shadow, text, prop, or VFX.

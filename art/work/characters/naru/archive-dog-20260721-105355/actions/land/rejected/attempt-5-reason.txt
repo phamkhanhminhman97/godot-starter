@@ -1,0 +1,8 @@
+Rejected by strict numeric QC.
+
+- body_scale_mean: 0.3415 (idle reference 0.4351)
+- profile_body_scale_drift: 0.2151 (maximum 0.0800)
+
+The grounded anchor is acceptable, but the generated subject is substantially
+smaller than the locked idle profile. The next attempt edits this exact sheet
+using the measured 1.27 scale gap; thresholds remain unchanged.

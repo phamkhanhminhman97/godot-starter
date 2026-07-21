@@ -3,12 +3,12 @@
   "identity": {
     "id": "replace-me",
     "displayName": "Replace Me",
-    "role": "ranged pressure",
-    "fantasy": "One short original visual and gameplay fantasy.",
+    "role": "Agent must choose one primary role",
+    "fantasy": "Agent must define one short original visual and gameplay fantasy.",
     "silhouette": [
-      "One recognizable large shape",
-      "One readable body or costume shape",
-      "One movement cue"
+      "Agent must define one recognizable large shape",
+      "Agent must define one readable body or costume shape",
+      "Agent must define one movement cue"
     ],
     "palette": ["#000000", "#000000", "#000000"]
   },
@@ -23,21 +23,25 @@
       "range": 0,
       "startupFrames": 3,
       "activeFrames": [3],
-      "recoveryFrames": 3,
+      "recoveryFrames": 2,
       "cooldownMs": 0,
       "dataSource": "weapon",
-      "counterplay": "State a specific spacing, interrupt, or punish option."
+      "counterplay": "Agent must state a specific spacing, interrupt, or punish option.",
+      "interruption": "Agent must state what happens if interrupted before the spawn event."
     },
     "ability": {
       "name": "Signature ability",
-      "description": "Describe one original ability with one clear purpose.",
+      "description": "Agent must describe one original ability with one clear purpose.",
+      "startupFrames": 4,
+      "activeFrames": [4],
+      "recoveryFrames": 3,
       "cooldownMs": 6000,
-      "counterplay": "State a specific counterplay option.",
-      "interruption": "State what happens if interrupted before its event frame."
+      "counterplay": "Agent must state a specific counterplay option.",
+      "interruption": "Agent must state what happens if interrupted before its event frame."
     },
     "weaknesses": [
-      "One concrete timing or spacing weakness",
-      "One second concrete weakness"
+      "Agent must define one concrete timing or spacing weakness",
+      "Agent must define one second concrete weakness"
     ]
   },
   "animation": {
@@ -49,12 +53,12 @@
       "pivot": { "x": 0.5, "y": 0.9 }
     },
     "states": {
-      "idle": { "frameCount": 4, "fps": 6, "loop": true, "events": [], "onComplete": "idle" },
-      "walk": { "frameCount": 6, "fps": 12, "loop": true, "events": [], "onComplete": "walk" },
-      "jump_start": { "frameCount": 3, "fps": 12, "loop": false, "events": [], "onComplete": "rise" },
-      "rise": { "frameCount": 2, "fps": 8, "loop": true, "events": [], "onComplete": "rise" },
-      "fall": { "frameCount": 2, "fps": 8, "loop": true, "events": [], "onComplete": "fall" },
-      "land": { "frameCount": 3, "fps": 12, "loop": false, "events": [], "onComplete": "idle" },
+      "idle": { "frameCount": 4, "fps": 6, "loop": true, "events": [], "cancelAfterFrame": null, "onComplete": "idle" },
+      "walk": { "frameCount": 6, "fps": 12, "loop": true, "events": [], "cancelAfterFrame": null, "onComplete": "walk" },
+      "jump_start": { "frameCount": 3, "fps": 12, "loop": false, "events": [], "cancelAfterFrame": null, "onComplete": "rise" },
+      "rise": { "frameCount": 2, "fps": 8, "loop": true, "events": [], "cancelAfterFrame": null, "onComplete": "rise" },
+      "fall": { "frameCount": 2, "fps": 8, "loop": true, "events": [], "cancelAfterFrame": null, "onComplete": "fall" },
+      "land": { "frameCount": 3, "fps": 12, "loop": false, "events": [], "cancelAfterFrame": null, "onComplete": "idle" },
       "attack": {
         "frameCount": 6,
         "fps": 12,
@@ -63,14 +67,15 @@
         "cancelAfterFrame": 5,
         "onComplete": "idle"
       },
-      "hurt": { "frameCount": 3, "fps": 12, "loop": false, "events": [], "onComplete": "idle" },
-      "launch": { "frameCount": 4, "fps": 12, "loop": false, "events": [], "onComplete": "tumble" },
-      "tumble": { "frameCount": 6, "fps": 12, "loop": true, "events": [], "onComplete": "tumble" },
+      "hurt": { "frameCount": 3, "fps": 12, "loop": false, "events": [], "cancelAfterFrame": null, "onComplete": "idle" },
+      "launch": { "frameCount": 4, "fps": 12, "loop": false, "events": [], "cancelAfterFrame": null, "onComplete": "tumble" },
+      "tumble": { "frameCount": 6, "fps": 12, "loop": true, "events": [], "cancelAfterFrame": null, "onComplete": "tumble" },
       "death": {
         "frameCount": 8,
         "fps": 10,
         "loop": false,
         "events": [{ "frame": 7, "type": "despawn", "id": "self" }],
+        "cancelAfterFrame": null,
         "onComplete": "removed"
       },
       "ability": {
@@ -85,9 +90,9 @@
   },
   "artBrief": {
     "spriteSheet": "One right-facing body-only sheet per state, 256x256 cells, row-major frame order, transparent runtime PNG, feet-center pivot.",
-    "windUpCue": "Describe the readable startup cue.",
-    "impactCue": "Describe the body recoil and separate event-driven VFX cue.",
-    "recoveryCue": "Describe the punishable recovery cue.",
+    "windUpCue": "Agent must describe the readable startup cue.",
+    "impactCue": "Agent must describe the body recoil and separate event-driven VFX cue.",
+    "recoveryCue": "Agent must describe the punishable recovery cue.",
     "avoid": [
       "Named franchise characters, assets, logos, terminology, or move lists",
       "Weapon, muzzle flash, projectile, impact, trail, or dust baked into body sheets",
@@ -107,4 +112,3 @@
     "notes": "Simulation owns events and transitions. Renderer only displays the selected state/frame and event-driven cosmetics."
   }
 }
-

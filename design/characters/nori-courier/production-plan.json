@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "1.0",
+  "characterId": "nori-courier",
+  "targetStatus": "art-proof",
+  "currentPhase": "art-proof",
+  "identity": {
+    "status": "proof-only",
+    "master": "art/tests/agent-sprite-forge/nori/idle/processed/idle-1.png",
+    "turnaround": null,
+    "palette": "design/characters/nori-courier/character-spec.json",
+    "scaleProfile": "art/tests/agent-sprite-forge/nori/character-scale-profile.json"
+  },
+  "states": {
+    "idle": { "status": "proof-passed", "attempt": 1, "nextAction": "regenerate-body-only-in-production-workspace" },
+    "walk": { "status": "conditional-proof", "attempt": 2, "nextAction": "regenerate-anchor-and-source-edge" },
+    "jump_start": { "status": "missing", "attempt": 0, "nextAction": "wait-for-production-identity-lock" },
+    "rise": { "status": "missing", "attempt": 0, "nextAction": "wait-for-production-identity-lock" },
+    "fall": { "status": "missing", "attempt": 0, "nextAction": "wait-for-production-identity-lock" },
+    "land": { "status": "missing", "attempt": 0, "nextAction": "wait-for-production-identity-lock" },
+    "attack": { "status": "proof-passed", "attempt": 2, "nextAction": "regenerate-without-baked-weapon" },
+    "hurt": { "status": "proof-passed", "attempt": 1, "nextAction": "regenerate-without-baked-weapon" },
+    "launch": { "status": "missing", "attempt": 0, "nextAction": "wait-for-production-identity-lock" },
+    "tumble": { "status": "missing", "attempt": 0, "nextAction": "wait-for-production-identity-lock" },
+    "death": { "status": "missing", "attempt": 0, "nextAction": "wait-for-production-identity-lock" },
+    "ability": { "status": "missing", "attempt": 0, "nextAction": "wait-for-production-identity-lock" }
+  },
+  "promotion": {
+    "preflight": "not-run",
+    "approvedForPromotion": false,
+    "promotedAt": null
+  }
+}

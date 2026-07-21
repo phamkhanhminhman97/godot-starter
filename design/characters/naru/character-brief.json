@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0",
+  "characterId": "naru",
+  "displayName": "Naru",
+  "userBrief": "m\u00e8o nh\u1ecf m\u1eb7c \u0111\u1ed3 ninja; ph\u1ea3n \u0111\u00f2n ch\u1eadm nh\u01b0ng m\u1ea1nh; complete to qc-passed; no Godot; generate2dsprite only",
+  "autonomyMode": "agent-led",
+  "targetStatus": "qc-passed",
+  "constraints": {
+    "species": "small ninja cat",
+    "artStyle": "clean_hd",
+    "weaponSeparated": true,
+    "noGodot": true
+  }
+}

@@ -26,11 +26,15 @@
       "recoveryFrames": 4,
       "cooldownMs": 0,
       "dataSource": "weapon",
-      "counterplay": "Advance during the crouched wind-up, bait the weapon event, then punish Nori during the open recovery pose."
+      "counterplay": "Advance during the crouched wind-up, bait the weapon event, then punish Nori during the open recovery pose.",
+      "interruption": "If interrupted before frame 4, no weapon event is emitted and Nori enters the simulation-selected hurt or launch state."
     },
     "ability": {
       "name": "Tailwind Brake",
       "description": "Nori plants her feet and releases a short body-driven air burst to regain space.",
+      "startupFrames": 4,
+      "activeFrames": [4],
+      "recoveryFrames": 3,
       "cooldownMs": 7000,
       "counterplay": "Jump over the low burst or wait outside its short range; Nori cannot move during startup.",
       "interruption": "If interrupted before frame 4, no burst is created and the cooldown is not spent."
@@ -49,12 +53,12 @@
       "pivot": { "x": 0.5, "y": 0.9 }
     },
     "states": {
-      "idle": { "frameCount": 4, "fps": 6, "loop": true, "events": [], "onComplete": "idle" },
-      "walk": { "frameCount": 6, "fps": 12, "loop": true, "events": [], "onComplete": "walk" },
-      "jump_start": { "frameCount": 3, "fps": 12, "loop": false, "events": [], "onComplete": "rise" },
-      "rise": { "frameCount": 2, "fps": 8, "loop": true, "events": [], "onComplete": "rise" },
-      "fall": { "frameCount": 2, "fps": 8, "loop": true, "events": [], "onComplete": "fall" },
-      "land": { "frameCount": 3, "fps": 12, "loop": false, "events": [], "onComplete": "idle" },
+      "idle": { "frameCount": 4, "fps": 6, "loop": true, "events": [], "cancelAfterFrame": null, "onComplete": "idle" },
+      "walk": { "frameCount": 6, "fps": 12, "loop": true, "events": [], "cancelAfterFrame": null, "onComplete": "walk" },
+      "jump_start": { "frameCount": 3, "fps": 12, "loop": false, "events": [], "cancelAfterFrame": null, "onComplete": "rise" },
+      "rise": { "frameCount": 2, "fps": 8, "loop": true, "events": [], "cancelAfterFrame": null, "onComplete": "rise" },
+      "fall": { "frameCount": 2, "fps": 8, "loop": true, "events": [], "cancelAfterFrame": null, "onComplete": "fall" },
+      "land": { "frameCount": 3, "fps": 12, "loop": false, "events": [], "cancelAfterFrame": null, "onComplete": "idle" },
       "attack": {
         "frameCount": 9,
         "fps": 12,
@@ -66,10 +70,10 @@
         "cancelAfterFrame": 7,
         "onComplete": "idle"
       },
-      "hurt": { "frameCount": 4, "fps": 12, "loop": false, "events": [{ "frame": 0, "type": "sound", "id": "nori-hurt" }], "onComplete": "idle" },
-      "launch": { "frameCount": 4, "fps": 12, "loop": false, "events": [], "onComplete": "tumble" },
-      "tumble": { "frameCount": 6, "fps": 12, "loop": true, "events": [], "onComplete": "tumble" },
-      "death": { "frameCount": 8, "fps": 10, "loop": false, "events": [{ "frame": 7, "type": "despawn", "id": "self" }], "onComplete": "removed" },
+      "hurt": { "frameCount": 4, "fps": 12, "loop": false, "events": [{ "frame": 0, "type": "sound", "id": "nori-hurt" }], "cancelAfterFrame": null, "onComplete": "idle" },
+      "launch": { "frameCount": 4, "fps": 12, "loop": false, "events": [], "cancelAfterFrame": null, "onComplete": "tumble" },
+      "tumble": { "frameCount": 6, "fps": 12, "loop": true, "events": [], "cancelAfterFrame": null, "onComplete": "tumble" },
+      "death": { "frameCount": 8, "fps": 10, "loop": false, "events": [{ "frame": 7, "type": "despawn", "id": "self" }], "cancelAfterFrame": null, "onComplete": "removed" },
       "ability": { "frameCount": 8, "fps": 12, "loop": false, "events": [{ "frame": 4, "type": "hit", "id": "tailwind-brake" }], "cancelAfterFrame": 6, "onComplete": "idle" }
     }
   },
@@ -97,4 +101,3 @@
     "notes": "Character and weapon data are composed at runtime. Simulation owns events, knockback, and transitions; renderer only displays frames and event-driven cosmetics."
   }
 }
-

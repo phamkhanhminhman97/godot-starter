@@ -1,0 +1,4 @@
+Accepted prompt contract: exact 2x3 six-frame body-only universal weapon action
+for locked Naru on solid #FF00FF. Slow ready and hand preparation, zero-based
+frame 3 hands-forward spawn pose, then clear recovery. Feet and scale match idle.
+No weapon, muzzle flash, projectile, impact, dust, trail, shadow, text, or prop.

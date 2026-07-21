@@ -1,0 +1,2 @@
+Rejected by strict QC: a source cell touched its edge and grounded
+anchor_y_std was approximately 0.0898, above the 0.0500 limit.

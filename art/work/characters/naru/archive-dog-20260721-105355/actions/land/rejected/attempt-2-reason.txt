@@ -1,0 +1,2 @@
+Rejected by strict QC: profile_body_scale_drift was approximately 0.0929,
+above the 0.0800 limit. Detached dust was also unsuitable for a body-only sheet.

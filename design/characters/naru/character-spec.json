@@ -1,0 +1,226 @@
+{
+  "schemaVersion": "1.0",
+  "identity": {
+    "id": "naru",
+    "displayName": "Naru",
+    "role": "counter bruiser",
+    "fantasy": "A tiny ninja cat who braces through a slow, readable tell, then answers one mistimed close-range strike with a compact, powerful body counter.",
+    "silhouette": [
+      "Pointed charcoal ninja hood that reads as upright cat ears",
+      "Short symmetrical crimson scarf tails around a compact feline body",
+      "Low planted stance with oversized cream paw wraps and a visible cat tail tip"
+    ],
+    "palette": [
+      "#202832",
+      "#F0D8B2",
+      "#B6403A",
+      "#607A74",
+      "#12171C"
+    ]
+  },
+  "combat": {
+    "model": "knockback-ringout",
+    "health": 0,
+    "weightPct": 98,
+    "moveSpeed": 104,
+    "primary": {
+      "name": "Ninja Ready Stance",
+      "damage": 0,
+      "range": 0,
+      "startupFrames": 3,
+      "activeFrames": [
+        3
+      ],
+      "recoveryFrames": 2,
+      "cooldownMs": 0,
+      "dataSource": "weapon",
+      "counterplay": "Step inside during the visible hand draw, force the weapon event, then punish the two open recovery frames.",
+      "interruption": "If Naru is interrupted before frame 3, no weapon event is emitted and simulation selects hurt or launch."
+    },
+    "ability": {
+      "name": "Stone-Paw Reversal",
+      "description": "Naru plants both feet through a long brace. Only an incoming close strike on frame 4 arms the reversal; simulation resolves the heavy counter exactly on frame 5.",
+      "startupFrames": 4,
+      "counterWindowFrames": [
+        4
+      ],
+      "activeFrames": [
+        5
+      ],
+      "recoveryFrames": 3,
+      "cooldownMs": 7000,
+      "counterplay": "Recognize the crossed-paw brace, withhold the strike for one frame, jump or remain outside the short counter reach, then punish frames 6 through 8.",
+      "interruption": "Before frame 4 Naru can be interrupted normally and spends no counter. A strike outside frame 4 does not arm the hit on frame 5."
+    },
+    "weaknesses": [
+      "The one-frame counter window is preceded by four readable startup frames and followed by three punishable recovery frames.",
+      "Naru has short effective reach and no body-sheet projectile, so patient spacing denies the character's main job."
+    ]
+  },
+  "animation": {
+    "sprite": {
+      "frameWidth": 256,
+      "frameHeight": 256,
+      "directions": [
+        "right"
+      ],
+      "mirrorLeft": true,
+      "pivot": {
+        "x": 0.5,
+        "y": 0.9
+      }
+    },
+    "states": {
+      "idle": {
+        "frameCount": 4,
+        "fps": 6,
+        "loop": true,
+        "events": [],
+        "cancelAfterFrame": null,
+        "onComplete": "idle"
+      },
+      "walk": {
+        "frameCount": 6,
+        "fps": 12,
+        "loop": true,
+        "events": [],
+        "cancelAfterFrame": null,
+        "onComplete": "walk"
+      },
+      "jump_start": {
+        "frameCount": 4,
+        "fps": 12,
+        "loop": false,
+        "events": [],
+        "cancelAfterFrame": null,
+        "onComplete": "rise"
+      },
+      "rise": {
+        "frameCount": 4,
+        "fps": 8,
+        "loop": true,
+        "events": [],
+        "cancelAfterFrame": null,
+        "onComplete": "rise"
+      },
+      "fall": {
+        "frameCount": 4,
+        "fps": 8,
+        "loop": true,
+        "events": [],
+        "cancelAfterFrame": null,
+        "onComplete": "fall"
+      },
+      "land": {
+        "frameCount": 4,
+        "fps": 12,
+        "loop": false,
+        "events": [],
+        "cancelAfterFrame": null,
+        "onComplete": "idle"
+      },
+      "attack": {
+        "frameCount": 6,
+        "fps": 12,
+        "loop": false,
+        "events": [
+          {
+            "frame": 3,
+            "type": "spawn",
+            "id": "weapon-primary"
+          }
+        ],
+        "cancelAfterFrame": 5,
+        "onComplete": "idle"
+      },
+      "hurt": {
+        "frameCount": 4,
+        "fps": 12,
+        "loop": false,
+        "events": [
+          {
+            "frame": 0,
+            "type": "sound",
+            "id": "naru-hurt"
+          }
+        ],
+        "cancelAfterFrame": null,
+        "onComplete": "idle"
+      },
+      "launch": {
+        "frameCount": 4,
+        "fps": 12,
+        "loop": false,
+        "events": [],
+        "cancelAfterFrame": null,
+        "onComplete": "tumble"
+      },
+      "tumble": {
+        "frameCount": 6,
+        "fps": 12,
+        "loop": true,
+        "events": [],
+        "cancelAfterFrame": null,
+        "onComplete": "tumble"
+      },
+      "death": {
+        "frameCount": 8,
+        "fps": 10,
+        "loop": false,
+        "events": [
+          {
+            "frame": 7,
+            "type": "despawn",
+            "id": "self"
+          }
+        ],
+        "cancelAfterFrame": null,
+        "onComplete": "removed"
+      },
+      "ability": {
+        "frameCount": 9,
+        "fps": 12,
+        "loop": false,
+        "events": [
+          {
+            "frame": 4,
+            "type": "counter-open",
+            "id": "stone-paw-reversal"
+          },
+          {
+            "frame": 5,
+            "type": "hit",
+            "id": "stone-paw-reversal"
+          }
+        ],
+        "cancelAfterFrame": 7,
+        "onComplete": "idle"
+      }
+    }
+  },
+  "artBrief": {
+    "spriteSheet": "Painterly clean-HD side-view body-only character. One independent right-facing multi-row grid per state, 256x256 runtime cells, row-major order, transparent runtime PNG, normalized feet-center pivot at x=0.5 y=0.9.",
+    "windUpCue": "For Stone-Paw Reversal, Naru sinks low for four frames, crosses the oversized wrapped paws, and pulls the crimson scarf taut before the one-frame counter window.",
+    "impactCue": "Frame 5 snaps the compact torso and lead paw forward with a sharp full-body recoil; counter flash, impact burst, sound, and screen feedback remain separate event-driven assets.",
+    "recoveryCue": "Naru overextends, one knee touches down, both paws open, and the scarf falls slack through three visibly punishable frames.",
+    "avoid": [
+      "Named franchise characters, assets, logos, terminology, silhouettes, or move lists",
+      "Sword, shuriken, weapon, projectile, impact, dust, trail, text, logo, or detached VFX baked into body sheets",
+      "Side-specific emblems or costume asymmetry that becomes incorrect when mirrored",
+      "Tiny facial detail, realistic anatomy, black-on-black unreadable shapes, crop, or frame-to-frame identity drift"
+    ]
+  },
+  "implementationNotes": {
+    "stateTransitions": [
+      "idle <-> walk",
+      "idle|walk -> jump_start -> rise -> fall -> land -> idle",
+      "idle|walk|rise|fall -> attack",
+      "idle|walk -> ability -> idle",
+      "any living state -> hurt|launch",
+      "launch -> tumble",
+      "any living state -> death -> removed"
+    ],
+    "eventsAreAuthoritative": true,
+    "notes": "Simulation owns counter arming, hit evaluation, weapon spawn, knockback, cooldown, interruption, and transitions. Renderer only displays the selected Naru frame and event-driven cosmetics. Species is a small ninja cat; body sheets remain weapon-free."
+  }
+}

@@ -1,0 +1,6 @@
+Rejected by strict numeric QC.
+
+- profile_body_scale_drift: 0.1114 (maximum 0.0800)
+
+The action is readable and grounded, but the body is too large relative to the
+locked idle scale profile. The global validation threshold was not changed.

@@ -1,0 +1,2 @@
+Rejected by strict QC: profile_body_scale_drift was approximately 0.2255,
+above the 0.0800 limit. The scale profile and threshold were not changed.

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0",
+  "characterId": "naru",
+  "approvedForPromotion": false,
+  "approvedForGodot": false,
+  "reviewedAt": null,
+  "reviewer": null,
+  "checks": {
+    "identityLocked": false,
+    "allRequiredStatesPresent": false,
+    "manifestMatchesSpec": false,
+    "numericQcPassed": false,
+    "visualQcPassed": false,
+    "mirrorPassed": false,
+    "gameplayScalePassed": false,
+    "alphaEdgesPassed": false,
+    "weaponSeparated": false,
+    "runtimePathsExist": false
+  },
+  "stateResults": {},
+  "exceptions": [],
+  "blockers": [
+    "Cat identity master, turnaround, palette, and shared scale profile are not approved.",
+    "Required action sheets have not passed numeric and visual QC."
+  ],
+  "notes": "Redesign in progress: Naru is a small ninja cat. generate2dsprite only; no Godot promotion."
+}

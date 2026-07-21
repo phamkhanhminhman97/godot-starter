@@ -1,0 +1,4 @@
+Accepted prompt contract: exact 2x2 four-frame airborne launch reaction for
+locked Naru on solid #FF00FF. Continuous backward knockback posture, centered
+body, readable scarf and wrapped paws, no weapon, impact burst, projectile,
+trail, speed line, shadow, text, cropping, or detached component.
